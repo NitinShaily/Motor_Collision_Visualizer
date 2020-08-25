@@ -6,8 +6,8 @@ import pydeck as pdk
 import plotly.express as px
 
 #%%
-st.title("Motor collision")
-st.markdown("streamlit dashboard to monitor collision in NYC ")
+st.title("Motor Collision")
+st.markdown("Streamlit dashboard to monitor collision in New York City ")
 
 @st.cache(persist = True)
 def load_data(nrows):
@@ -23,12 +23,12 @@ data = load_data(100000)
 #%%
 data.rename(columns = {"persons injured": 'person_injured'}, inplace = True)
 #%%
-st.header("where are most peapol injured in NYC?")
+st.header("Where are most peaple injured in NYC ?")
 injured_people = st.slider("Number of persons injured in collisions", 0, 19)
 st.map(data.query(" person_injured >= @injured_people")[['longitude', 'latitude']].dropna(how='any'))
 
 st.header("How many collision happern in a single day?")
-hour = st.sidebar.selectbox("hour to look at", range(0,24), 1)
+hour = st.sidebar.selectbox("Hour to look at", range(0,24), 1)
 data = data[data['date_time'].dt.hour == hour]
 st.map(data.query("person_injured == @hour")[['longitude', 'latitude']].dropna(how='any'))
 
